@@ -1,8 +1,8 @@
 ---
-toc: true
+toc: false
 layout: post
 description: A basic example of Cython and Numba applied to a simple algorithm.
-categories: [markdown]
+categories: [Python, Cython, Numba, Insertion sort, sorting, algorithms]
 title: "Cython & Numba implementations of a simple algorithm: Insertion sort"
 ---
 
