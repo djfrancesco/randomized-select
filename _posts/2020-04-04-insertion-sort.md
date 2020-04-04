@@ -1,7 +1,8 @@
 ---
 title: "Cython & Numba implementations of a simple algorithm: Insertion sort"
-summary: "show a basic example of Cython and Numba applied to a simple algorithm"
+summary: A basic example of Cython and Numba applied to a simple algorithm.
 toc: true
+layout: post
 comments: false
 image: images/2020-04-04/animation-optimized.gif
 hide: false
