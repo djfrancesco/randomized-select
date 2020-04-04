@@ -246,7 +246,7 @@ _ = ax.set_title('Timings of Insertion sort')
 
 ## Conclusion
 
-We can see that both Cython and Numba give very good results regarding the optimization of NumPy-based Python code. Numba is easier to use but I think that Cython is more flexible regarding the kinds of algorithms that you can optimize, but a little bit more complex.
+We can see that both Cython and Numba give very good results regarding the optimization of NumPy-based Python code. Numba is easier to use but I think that Cython is more flexible regarding the kinds of algorithms that you can optimize, although a little bit more complex.
 
 ## Appendix: generate the animated gif
 
