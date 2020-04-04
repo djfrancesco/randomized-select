@@ -19,7 +19,7 @@ Let us recall the purpose of these two Python-related tools from their respectiv
 
 Now, let's describe the chosen algorithm: *Insertion sort*, which is a very simple and intuitive algorithm. As written in Cormen et al. [1]:
 
-> *Insertion sort* works the way many people sort a hand of playing cards. We start with an empty left hand and the cards face down on the table. We then remove one card at a time from the table and insert it into the correct position in the left hand. To find the correct position for a card, we compare it with each of the cards already in the hand, from right to left [...]. At all times, the cards held in the left hand are sorted, and these cards were originally the top cards of the pile on the table.
+> Insertion sort works the way many people sort a hand of playing cards. We start with an empty left hand and the cards face down on the table. We then remove one card at a time from the table and insert it into the correct position in the left hand. To find the correct position for a card, we compare it with each of the cards already in the hand, from right to left [...]. At all times, the cards held in the left hand are sorted, and these cards were originally the top cards of the pile on the table.
 
 Here is a visualization of the *Insertion sort* process applied to 25 random elements (the code used to generate this animated gif is shown at the end of the notebook):
 
@@ -100,11 +100,11 @@ def insertion_sort_inplace_numba(A):
 ## Cython implementation
 
 Again, this is very similar to the Python implementation, especially the looping part. The differences are the following ones:
-- we added the `%%cython` magic for interactive work with Cython in Jupyterlab
-- we imported some libraries (`cython` and the NumPy C API) specifically for thic Cython notebook cell
-- we added some compiler directives (instructions which affect which kind of code Cython generates). [Here](https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#compiler-directives) is a decription of the various compiler directives from the Cython documentation
+- we add the `%%cython` magic for interactive work with Cython in Jupyterlab
+- we import some libraries (`cython` and the NumPy C API) specifically for thic Cython notebook cell
+- we add some compiler directives (instructions which affect which kind of code Cython generates). [Here](https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#compiler-directives) is a decription of the various compiler directives from the Cython documentation
 - the function is defined as `cpdef` which means that it can be called either from some Python or Cython code. In our case, we are going to call it from a Python function
-- in the arguments, a typed 1D memoryview is performed on the given NumPy `int64` array: `cnp.int64_t[:] A`, which allows a fast/direct access to memory buffers. However, since this is typed,  we need to write another function if dealing with floats, e.g. with a `cnp.float64_t[:]` memoryview.
+- in the arguments, a typed 1D memoryview is performed on the given NumPy `int64` array: `cnp.int64_t[:] A`, which allows a fast/direct access to memory buffers. However, since this is typed, we need to write another function if dealing with floats, e.g. with a `cnp.float64_t[:]` memoryview.
 - all variables are declared
 - `nogil` is added at the end of the function signature, to indicate the release of the [GIL](https://wiki.python.org/moin/GlobalInterpreterLock). In the present case, this is only to make sure that the CPython API is not used within the function (or there would be an error when executing the cell).
 
@@ -134,7 +134,6 @@ cpdef void insertion_sort_inplace_cython_int64(cnp.int64_t[:] A) nogil:
 
 ## Main function
 
-
 ```python
 def insertion_sort(A, kind):
     B = np.copy(A)
@@ -150,7 +149,6 @@ def insertion_sort(A, kind):
 ## Timings
 
 First, we check that the result is invariant with respect to the function called:
-
 
 ```python
 N = 100
@@ -246,10 +244,9 @@ _ = ax.set_title('Timings of Insertion sort')
 
 ![]({{ site.baseurl }}/images/20200404/output_19_0.png "Timings without Python")
 
-
 ## Conclusion
 
-We can see that both Cython and Numba give very good results regarding the optimization of NumPy-based Python code. Numba is easier to use but I think that Cython is more flexible regarding the kinds of algorithms that you can optimize. It is actually kind of coding a mix of C and Python. It is powerfull but sometimes a little bit complex.
+We can see that both Cython and Numba give very good results regarding the optimization of NumPy-based Python code. Numba is easier to use but I think that Cython is more flexible regarding the kinds of algorithms that you can optimize, but a little bit more complex.
 
 ## Appendix: generate the animated gif
 

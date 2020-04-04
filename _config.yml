@@ -7,7 +7,7 @@
 # https://learnxinyminutes.com/docs/yaml/
 
 title: randomized-select
-description: Random selection of everything.
+description: Random selection of things related to algorithms and computing.
 github_username: djfrancesco
 # you can comment the below line out if your repo name is not different than your baseurl
 github_repo: "randomized-select"
@@ -43,7 +43,7 @@ minima:
     github: djfrancesco
 
 # Set this to true to get LaTeX math equation support
-use_math: 
+use_math: true
 
 # Set this to true to display the summary of your blog post under your title on the Home page.
 show_description: true
