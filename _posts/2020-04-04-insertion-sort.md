@@ -2,13 +2,14 @@
 toc: false
 layout: post
 description: A basic example of Cython and Numba applied to a simple algorithm.
-categories: [Python, Cython, Numba, sorting algorithms]
+categories: [Python, Cython, Numba, Sorting algorithms]
 title: "Cython & Numba implementations of a simple algorithm: Insertion sort"
+use_math: true
 ---
 
 The aim of this notebook is to show a basic example of [Cython](https://cython.org/) and [Numba](http://numba.pydata.org/), applied to a simple algorithm. 
 
-As we will see, the code transformation from Python to Cython or Python to Numba can be really easy (specifically for the latter), while being way more efficient than pure Python. This is due to the fact that the computer is CPU bound when executing this type of algorithmic task, for which the overhead of calling the CPython API in pure Python is really large. And this is also true within a [Jupyterlab](/) notebook. 
+As we will see, the code transformation from Python to Cython or Python to Numba can be really easy (specifically for the latter), and results in very efficient code for sorting algorithms. This is due to the fact that the computer is CPU bound when executing this type of algorithmic task, for which the overhead of calling the CPython API in pure Python is really large. And this is also true within a [Jupyterlab](/) notebook. 
 
 Let us recall the purpose of these two Python-related tools from their respective websites:
 
