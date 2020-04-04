@@ -1,4 +1,148 @@
-<h1 id="cython--numba-implementations-of-a-simple-algorithm-insertion-sort">Cython &amp; Numba implementations of a simple algorithm: <em>Insertion sort</em></h1>
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Cython &amp; Numba implementations of a simple algorithm: Insertion sort | randomized-select</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Cython &amp; Numba implementations of a simple algorithm: Insertion sort" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Cython &amp; Numba implementations of a simple algorithm: Insertion sort" />
+<meta property="og:description" content="Cython &amp; Numba implementations of a simple algorithm: Insertion sort" />
+<link rel="canonical" href="https://djfrancesco.github.io/randomized-select/python/cython/numba/insertion%20sort/sorting/2020/04/04/insertion-sort.html" />
+<meta property="og:url" content="https://djfrancesco.github.io/randomized-select/python/cython/numba/insertion%20sort/sorting/2020/04/04/insertion-sort.html" />
+<meta property="og:site_name" content="randomized-select" />
+<meta property="og:image" content="https://djfrancesco.github.io/randomized-select/images/2020-04-04/animation-optimized.gif" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-04T00:00:00-05:00" />
+<script type="application/ld+json">
+{"datePublished":"2020-04-04T00:00:00-05:00","dateModified":"2020-04-04T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://djfrancesco.github.io/randomized-select/python/cython/numba/insertion%20sort/sorting/2020/04/04/insertion-sort.html"},"description":"Cython &amp; Numba implementations of a simple algorithm: Insertion sort","image":"https://djfrancesco.github.io/randomized-select/images/2020-04-04/animation-optimized.gif","@type":"BlogPosting","url":"https://djfrancesco.github.io/randomized-select/python/cython/numba/insertion%20sort/sorting/2020/04/04/insertion-sort.html","headline":"Cython &amp; Numba implementations of a simple algorithm: Insertion sort","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/randomized-select/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://djfrancesco.github.io/randomized-select/feed.xml" title="randomized-select" /><link rel="shortcut icon" type="image/x-icon" href="/randomized-select/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Cython &amp; Numba implementations of a simple algorithm: Insertion sort | randomized-select</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Cython &amp; Numba implementations of a simple algorithm: Insertion sort" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Cython &amp; Numba implementations of a simple algorithm: Insertion sort" />
+<meta property="og:description" content="Cython &amp; Numba implementations of a simple algorithm: Insertion sort" />
+<link rel="canonical" href="https://djfrancesco.github.io/randomized-select/python/cython/numba/insertion%20sort/sorting/2020/04/04/insertion-sort.html" />
+<meta property="og:url" content="https://djfrancesco.github.io/randomized-select/python/cython/numba/insertion%20sort/sorting/2020/04/04/insertion-sort.html" />
+<meta property="og:site_name" content="randomized-select" />
+<meta property="og:image" content="https://djfrancesco.github.io/randomized-select/images/2020-04-04/animation-optimized.gif" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-04T00:00:00-05:00" />
+<script type="application/ld+json">
+{"datePublished":"2020-04-04T00:00:00-05:00","dateModified":"2020-04-04T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://djfrancesco.github.io/randomized-select/python/cython/numba/insertion%20sort/sorting/2020/04/04/insertion-sort.html"},"description":"Cython &amp; Numba implementations of a simple algorithm: Insertion sort","image":"https://djfrancesco.github.io/randomized-select/images/2020-04-04/animation-optimized.gif","@type":"BlogPosting","url":"https://djfrancesco.github.io/randomized-select/python/cython/numba/insertion%20sort/sorting/2020/04/04/insertion-sort.html","headline":"Cython &amp; Numba implementations of a simple algorithm: Insertion sort","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://djfrancesco.github.io/randomized-select/feed.xml" title="randomized-select" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/randomized-select/">randomized-select</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/randomized-select/about/">About Me</a><a class="page-link" href="/randomized-select/search/">Search</a><a class="page-link" href="/randomized-select/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Cython &amp; Numba implementations of a simple algorithm: Insertion sort</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-04T00:00:00-05:00" itemprop="datePublished">
+        Apr 4, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      10 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/randomized-select/categories/#Python">Python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/randomized-select/categories/#Cython">Cython</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/randomized-select/categories/#Numba">Numba</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/randomized-select/categories/#Insertion sort">Insertion sort</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/randomized-select/categories/#sorting">sorting</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#cython--numba-implementations-of-a-simple-algorithm-insertion-sort">Cython &amp; Numba implementations of a simple algorithm: Insertion sort</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#imports">Imports</a></li>
+<li class="toc-entry toc-h2"><a href="#python-implementation">Python implementation</a></li>
+<li class="toc-entry toc-h2"><a href="#numba-implementation">Numba implementation</a></li>
+<li class="toc-entry toc-h2"><a href="#cython-implementation">Cython implementation</a></li>
+<li class="toc-entry toc-h2"><a href="#main-function">Main function</a></li>
+<li class="toc-entry toc-h2"><a href="#timings">Timings</a></li>
+<li class="toc-entry toc-h2"><a href="#timings-1">Timings</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#with-pure-python">With pure Python</a></li>
+<li class="toc-entry toc-h3"><a href="#without-pure-python">Without pure Python</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#conclusion">Conclusion</a></li>
+<li class="toc-entry toc-h2"><a href="#appendix-generate-the-animated-gif">Appendix: generate the animated gif</a></li>
+</ul>
+</li>
+</ul><h1 id="cython--numba-implementations-of-a-simple-algorithm-insertion-sort">
+<a class="anchor" href="#cython--numba-implementations-of-a-simple-algorithm-insertion-sort" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cython &amp; Numba implementations of a simple algorithm: <em>Insertion sort</em>
+</h1>
 
 <p>The aim of this notebook is to show a basic example of <a href="https://cython.org/">Cython</a> and <a href="http://numba.pydata.org/">Numba</a>, applied to a simple algorithm.</p>
 
@@ -23,7 +167,7 @@
 <p>Here is a visualization of the <em>Insertion sort</em> process applied to 25 random elements (the code used to generate this animated gif is shown at the end of the notebook):</p>
 
 <p align="center">
-  <img width="500" src="https://github.com/djfrancesco/randomized-select/blob/master/images/20200404/animation-optimized.gif" alt="Insertion sort" />
+  <img width="500" src="https://github.com/djfrancesco/randomized-select/blob/master/images/20200404/animation-optimized.gif" alt="Insertion sort">
 </p>
 
 <p>However, this algorithm is not so efficient, except for elements that are almost already sorted: its performance is quadratic, i.e. $О ( n^2 )$. But we are only intersted here in comparing different optimization approaches in <em>Python</em> and not actually in sorting efficiently.</p>
@@ -42,10 +186,14 @@
 <p>And here are some other facts about <em>Insertion sort</em> from <a href="https://en.wikipedia.org/wiki/Insertion_sort">Wikipedia</a>:</p>
 <blockquote>
   <ul>
-    <li><strong>Adaptive</strong>, i.e., efficient for data sets that are already substantially sorted: the time complexity is $ O(kn) $ when each element in the input is no more than $k$ places away from its sorted position</li>
-    <li><strong>Stable</strong>, i.e., does not change the relative order of elements with equal keys</li>
-    <li><strong>In-place</strong>, i.e., only requires a constant amount $ O(1) $ of additional memory space</li>
-    <li><strong>Online</strong>, i.e., can sort a list as it receives it</li>
+    <li>
+<strong>Adaptive</strong>, i.e., efficient for data sets that are already substantially sorted: the time complexity is $ O(kn) $ when each element in the input is no more than $k$ places away from its sorted position</li>
+    <li>
+<strong>Stable</strong>, i.e., does not change the relative order of elements with equal keys</li>
+    <li>
+<strong>In-place</strong>, i.e., only requires a constant amount $ O(1) $ of additional memory space</li>
+    <li>
+<strong>Online</strong>, i.e., can sort a list as it receives it</li>
   </ul>
 </blockquote>
 
@@ -53,7 +201,8 @@
 
 <p>Now here is the code.</p>
 
-<h2 id="imports">Imports</h2>
+<h2 id="imports">
+<a class="anchor" href="#imports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Imports</h2>
 
 <p><a href="https://github.com/nschloe/perfplot">perfplot</a> is used to measure runtime for all different combination of array length and method.</p>
 
@@ -84,7 +233,8 @@
 <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">'legend.framealpha'</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">})</span>
 </code></pre></div></div>
 
-<h2 id="python-implementation">Python implementation</h2>
+<h2 id="python-implementation">
+<a class="anchor" href="#python-implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python implementation</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">insertion_sort_inplace_python</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
@@ -96,7 +246,8 @@
         <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>   
 </code></pre></div></div>
 
-<h2 id="numba-implementation">Numba implementation</h2>
+<h2 id="numba-implementation">
+<a class="anchor" href="#numba-implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Numba implementation</h2>
 
 <p>As you can observe, this is stricly the same as the pure <em>Python</em> implementation, except for the <code class="highlighter-rouge">@jit</code> (just-in-time) decorator:</p>
 
@@ -111,7 +262,8 @@
         <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
 </code></pre></div></div>
 
-<h2 id="cython-implementation">Cython implementation</h2>
+<h2 id="cython-implementation">
+<a class="anchor" href="#cython-implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cython implementation</h2>
 
 <p>Again, this is very similar to the <em>Python</em> implementation, especially the looping part. The differences are the following ones:</p>
 <ul>
@@ -121,7 +273,8 @@
   <li>the function is defined as <code class="highlighter-rouge">cpdef</code> which means that it can be called either from some <em>Python</em> or <em>Cython</em> code. In our case, we are going to call it from a <em>Python</em> function</li>
   <li>in the arguments, a typed 1D memoryview is performed on the given NumPy <code class="highlighter-rouge">int64</code> array: <code class="highlighter-rouge">cnp.int64_t[:] A</code>, which allows a fast/direct access to memory buffers. However, since this is typed,  we need to write another function if dealing with floats, e.g. with a <code class="highlighter-rouge">cnp.float64_t[:]</code> memoryview.</li>
   <li>all variables are declared</li>
-  <li><code class="highlighter-rouge">nogil</code> is added at the end of the function signature, to indicate the release of the <a href="https://wiki.python.org/moin/GlobalInterpreterLock">GIL</a>. In the present case, this is only to make sure that the CPython API is not used within the function (or there would be an error when executing the cell).</li>
+  <li>
+<code class="highlighter-rouge">nogil</code> is added at the end of the function signature, to indicate the release of the <a href="https://wiki.python.org/moin/GlobalInterpreterLock">GIL</a>. In the present case, this is only to make sure that the CPython API is not used within the function (or there would be an error when executing the cell).</li>
 </ul>
 
 <div class="language-cython highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">cython</span>
@@ -146,7 +299,8 @@
         <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
 </code></pre></div></div>
 
-<h2 id="main-function">Main function</h2>
+<h2 id="main-function">
+<a class="anchor" href="#main-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Main function</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">insertion_sort</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">kind</span><span class="p">):</span>
     <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
@@ -159,7 +313,8 @@
     <span class="k">return</span> <span class="n">B</span>
 </code></pre></div></div>
 
-<h2 id="timings">Timings</h2>
+<h2 id="timings">
+<a class="anchor" href="#timings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Timings</h2>
 
 <p>First, we check that the result is invariant with respect to the function called:</p>
 
@@ -174,11 +329,14 @@
 <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span><span class="n">A_sorted_cython</span><span class="p">,</span> <span class="n">A_sorted</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h2 id="timings-1">Timings</h2>
+<h2 id="timings-1">
+<a class="anchor" href="#timings-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Timings</h2>
 
 <p>Then we compare the execution time of the four different implementations: <em>Python</em>, <em>Cython</em>, <em>Numba</em> and NumPy. The NumPy command is <code class="highlighter-rouge">np.sort</code> with the default <em>quicksort</em> algorithm (implemented in <em>C</em>).</p>
 
-<h3 id="with-pure-python">With pure <em>Python</em></h3>
+<h3 id="with-pure-python">
+<a class="anchor" href="#with-pure-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>With pure <em>Python</em>
+</h3>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">out</span> <span class="o">=</span> <span class="n">perfplot</span><span class="o">.</span><span class="n">bench</span><span class="p">(</span>
     <span class="n">setup</span><span class="o">=</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">10</span> <span class="o">*</span> <span class="n">n</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>
@@ -194,23 +352,23 @@
 </code></pre></div></div>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  0%|          | 0/3 [00:00&lt;?, ?it/s]
-  0%|          | 0/4 [00:00&lt;?, ?it/s][A
- 25%|██▌       | 1/4 [00:00&lt;00:02,  1.18it/s][A
- 50%|█████     | 2/4 [00:01&lt;00:01,  1.54it/s][A
- 75%|███████▌  | 3/4 [00:01&lt;00:00,  1.88it/s][A
-100%|██████████| 4/4 [00:01&lt;00:00,  2.29it/s][A
- 33%|███▎      | 1/3 [00:01&lt;00:03,  1.52s/it][A
-  0%|          | 0/4 [00:00&lt;?, ?it/s][A
- 25%|██▌       | 1/4 [00:00&lt;00:02,  1.04it/s][A
- 50%|█████     | 2/4 [00:01&lt;00:01,  1.27it/s][A
- 75%|███████▌  | 3/4 [00:01&lt;00:00,  1.54it/s][A
-100%|██████████| 4/4 [00:01&lt;00:00,  2.02it/s][A
- 67%|██████▋   | 2/3 [00:03&lt;00:01,  1.61s/it][A
-  0%|          | 0/4 [00:00&lt;?, ?it/s][A
- 25%|██▌       | 1/4 [00:01&lt;00:04,  1.51s/it][A
- 50%|█████     | 2/4 [00:02&lt;00:02,  1.29s/it][A
- 75%|███████▌  | 3/4 [00:02&lt;00:01,  1.11s/it][A
-100%|██████████| 4/4 [00:03&lt;00:00,  1.16it/s][A
+  0%|          | 0/4 [00:00&lt;?, ?it/s][A
+ 25%|██▌       | 1/4 [00:00&lt;00:02,  1.18it/s][A
+ 50%|█████     | 2/4 [00:01&lt;00:01,  1.54it/s][A
+ 75%|███████▌  | 3/4 [00:01&lt;00:00,  1.88it/s][A
+100%|██████████| 4/4 [00:01&lt;00:00,  2.29it/s][A
+ 33%|███▎      | 1/3 [00:01&lt;00:03,  1.52s/it][A
+  0%|          | 0/4 [00:00&lt;?, ?it/s][A
+ 25%|██▌       | 1/4 [00:00&lt;00:02,  1.04it/s][A
+ 50%|█████     | 2/4 [00:01&lt;00:01,  1.27it/s][A
+ 75%|███████▌  | 3/4 [00:01&lt;00:00,  1.54it/s][A
+100%|██████████| 4/4 [00:01&lt;00:00,  2.02it/s][A
+ 67%|██████▋   | 2/3 [00:03&lt;00:01,  1.61s/it][A
+  0%|          | 0/4 [00:00&lt;?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01&lt;00:04,  1.51s/it][A
+ 50%|█████     | 2/4 [00:02&lt;00:02,  1.29s/it][A
+ 75%|███████▌  | 3/4 [00:02&lt;00:01,  1.11s/it][A
+100%|██████████| 4/4 [00:03&lt;00:00,  1.16it/s][A
 100%|██████████| 3/3 [00:07&lt;00:00,  2.41s/it]
 </code></pre></div></div>
 
@@ -234,7 +392,7 @@
 </code></pre></div></div>
 
 <p align="center">
-  <img width="500" src="https://github.com/djfrancesco/randomized-select/blob/master/images/20200404/output_16_0.png" alt="Insertion sort" />
+  <img width="500" src="https://github.com/djfrancesco/randomized-select/blob/master/images/20200404/output_16_0.png" alt="Insertion sort">
 </p>
 
 <p>We can observe the following things regarding the execution time:</p>
@@ -244,7 +402,9 @@
   <li>the <em>quicksort</em> NumPy algorithm is way more efficient ($O(n \; log \; n)$ on average)</li>
 </ul>
 
-<h3 id="without-pure-python">Without pure <em>Python</em></h3>
+<h3 id="without-pure-python">
+<a class="anchor" href="#without-pure-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Without pure <em>Python</em>
+</h3>
 
 <p>Let us run again the comparison without the pure <em>Python</em> version this time, in order to sort larger arrays.</p>
 
@@ -261,30 +421,30 @@
 </code></pre></div></div>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  0%|          | 0/5 [00:00&lt;?, ?it/s]
-  0%|          | 0/3 [00:00&lt;?, ?it/s][A
- 33%|███▎      | 1/3 [00:00&lt;00:00,  6.80it/s][A
- 67%|██████▋   | 2/3 [00:00&lt;00:00,  4.69it/s][A
-100%|██████████| 3/3 [00:00&lt;00:00,  5.47it/s][A
- 20%|██        | 1/5 [00:00&lt;00:02,  1.58it/s][A
-  0%|          | 0/3 [00:00&lt;?, ?it/s][A
- 33%|███▎      | 1/3 [00:00&lt;00:00,  3.08it/s][A
- 67%|██████▋   | 2/3 [00:00&lt;00:00,  3.06it/s][A
-100%|██████████| 3/3 [00:00&lt;00:00,  3.03it/s][A
- 40%|████      | 2/5 [00:01&lt;00:02,  1.35it/s][A
-  0%|          | 0/3 [00:00&lt;?, ?it/s][A
- 33%|███▎      | 1/3 [00:00&lt;00:01,  1.04it/s][A
- 67%|██████▋   | 2/3 [00:02&lt;00:00,  1.00it/s][A
-100%|██████████| 3/3 [00:02&lt;00:00,  1.22it/s][A
- 60%|██████    | 3/5 [00:04&lt;00:02,  1.25s/it][A
-  0%|          | 0/3 [00:00&lt;?, ?it/s][A
- 33%|███▎      | 1/3 [00:00&lt;00:01,  1.26it/s][A
- 67%|██████▋   | 2/3 [00:02&lt;00:00,  1.05it/s][A
-100%|██████████| 3/3 [00:03&lt;00:00,  1.06it/s][A
- 80%|████████  | 4/5 [00:07&lt;00:01,  1.80s/it][A
-  0%|          | 0/3 [00:00&lt;?, ?it/s][A
- 33%|███▎      | 1/3 [00:07&lt;00:15,  7.93s/it][A
- 67%|██████▋   | 2/3 [00:14&lt;00:07,  7.48s/it][A
-100%|██████████| 3/3 [00:15&lt;00:00,  5.06s/it][A
+  0%|          | 0/3 [00:00&lt;?, ?it/s][A
+ 33%|███▎      | 1/3 [00:00&lt;00:00,  6.80it/s][A
+ 67%|██████▋   | 2/3 [00:00&lt;00:00,  4.69it/s][A
+100%|██████████| 3/3 [00:00&lt;00:00,  5.47it/s][A
+ 20%|██        | 1/5 [00:00&lt;00:02,  1.58it/s][A
+  0%|          | 0/3 [00:00&lt;?, ?it/s][A
+ 33%|███▎      | 1/3 [00:00&lt;00:00,  3.08it/s][A
+ 67%|██████▋   | 2/3 [00:00&lt;00:00,  3.06it/s][A
+100%|██████████| 3/3 [00:00&lt;00:00,  3.03it/s][A
+ 40%|████      | 2/5 [00:01&lt;00:02,  1.35it/s][A
+  0%|          | 0/3 [00:00&lt;?, ?it/s][A
+ 33%|███▎      | 1/3 [00:00&lt;00:01,  1.04it/s][A
+ 67%|██████▋   | 2/3 [00:02&lt;00:00,  1.00it/s][A
+100%|██████████| 3/3 [00:02&lt;00:00,  1.22it/s][A
+ 60%|██████    | 3/5 [00:04&lt;00:02,  1.25s/it][A
+  0%|          | 0/3 [00:00&lt;?, ?it/s][A
+ 33%|███▎      | 1/3 [00:00&lt;00:01,  1.26it/s][A
+ 67%|██████▋   | 2/3 [00:02&lt;00:00,  1.05it/s][A
+100%|██████████| 3/3 [00:03&lt;00:00,  1.06it/s][A
+ 80%|████████  | 4/5 [00:07&lt;00:01,  1.80s/it][A
+  0%|          | 0/3 [00:00&lt;?, ?it/s][A
+ 33%|███▎      | 1/3 [00:07&lt;00:15,  7.93s/it][A
+ 67%|██████▋   | 2/3 [00:14&lt;00:07,  7.48s/it][A
+100%|██████████| 3/3 [00:15&lt;00:00,  5.06s/it][A
 100%|██████████| 5/5 [00:25&lt;00:00,  5.01s/it]
 </code></pre></div></div>
 
@@ -306,14 +466,16 @@
 </code></pre></div></div>
 
 <p align="center">
-  <img width="500" src="https://github.com/djfrancesco/randomized-select/blob/master/images/20200404/output_19_0.png" alt="Insertion sort" />
+  <img width="500" src="https://github.com/djfrancesco/randomized-select/blob/master/images/20200404/output_19_0.png" alt="Insertion sort">
 </p>
 
-<h2 id="conclusion">Conclusion</h2>
+<h2 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
 
 <p>We can see that both <em>Cython</em> and <em>Numba</em> give very good results regarding the optimization of NumPy-based <em>Python</em> code. <em>Numba</em> is easier to use but I think that <em>Cython</em> is more flexible regarding the kinds of algorithms that you can optimize. It is actually kind of coding a mix of <em>C</em> and <em>Python</em>. It is powerfull but sometimes a little bit complex.</p>
 
-<h2 id="appendix-generate-the-animated-gif">Appendix: generate the animated gif</h2>
+<h2 id="appendix-generate-the-animated-gif">
+<a class="anchor" href="#appendix-generate-the-animated-gif" aria-hidden="true"><span class="octicon octicon-link"></span></a>Appendix: generate the animated gif</h2>
 
 <p>This is done by dumping many matplotlib png figures into a folder and then aggregating the images into an animation using the <code class="highlighter-rouge">convert</code> linux command.</p>
 
@@ -359,3 +521,36 @@
     <span class="n">insertion_sort_inplace_python</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">cmap</span><span class="p">)</span>
     <span class="err">!</span><span class="n">convert</span> <span class="o">-</span><span class="n">delay</span> <span class="mi">1</span> <span class="o">-</span><span class="n">loop</span> <span class="mi">0</span> <span class="o">./</span><span class="n">images</span><span class="o">/</span><span class="n">Insertion_sort_</span><span class="o">*.</span><span class="n">png</span> <span class="n">animation</span><span class="o">.</span><span class="n">gif</span>
 </code></pre></div></div>
+
+  </div><a class="u-url" href="/randomized-select/python/cython/numba/insertion%20sort/sorting/2020/04/04/insertion-sort.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/randomized-select/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/randomized-select/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/randomized-select/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Random selection of everything.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/djfrancesco" title="djfrancesco"><svg class="svg-icon grey"><use xlink:href="/randomized-select/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/franssoa" title="franssoa"><svg class="svg-icon grey"><use xlink:href="/randomized-select/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
