@@ -26,6 +26,8 @@ Here is a visualization of the *Insertion sort* process applied to 25 random ele
   <img width="500" src="https://github.com/djfrancesco/randomized-select/blob/master/images/20200404/animation-optimized.gif" alt="Insertion sort">
 </p>
 
+![]({{ site.baseurl }}/images/20200404/animation-optimized.gif "Insertion sort")
+
 However, this algorithm is not so efficient, except for elements that are almost already sorted: its performance is quadratic, i.e. $О ( n^2 )$. But we are only intersted here in comparing different optimization approaches in *Python* and not actually in sorting efficiently.
 
 Here is the *Python* code for an in-place array-based implementation:
@@ -87,7 +89,6 @@ mpl.rcParams.update({'legend.framealpha': 0.8})
 ```
 
 ## Python implementation
-
 
 ```python
 def insertion_sort_inplace_python(A):
@@ -184,12 +185,9 @@ np.testing.assert_array_equal(A_sorted_cython, A_sorted_numba)
 np.testing.assert_array_equal(A_sorted_cython, A_sorted)
 ```
 
-## Timings
-
 Then we compare the execution time of the four different implementations: *Python*, *Cython*, *Numba* and NumPy. The NumPy command is `np.sort` with the default *quicksort* algorithm (implemented in *C*).
 
 ### With pure *Python*
-
 
 ```python
 out = perfplot.bench(
@@ -204,28 +202,6 @@ out = perfplot.bench(
     n_range=[10**k for k in range(1, 4)],
 )
 ```
-
-      0%|          | 0/3 [00:00<?, ?it/s]
-      0%|          | 0/4 [00:00<?, ?it/s][A
-     25%|██▌       | 1/4 [00:00<00:02,  1.18it/s][A
-     50%|█████     | 2/4 [00:01<00:01,  1.54it/s][A
-     75%|███████▌  | 3/4 [00:01<00:00,  1.88it/s][A
-    100%|██████████| 4/4 [00:01<00:00,  2.29it/s][A
-     33%|███▎      | 1/3 [00:01<00:03,  1.52s/it][A
-      0%|          | 0/4 [00:00<?, ?it/s][A
-     25%|██▌       | 1/4 [00:00<00:02,  1.04it/s][A
-     50%|█████     | 2/4 [00:01<00:01,  1.27it/s][A
-     75%|███████▌  | 3/4 [00:01<00:00,  1.54it/s][A
-    100%|██████████| 4/4 [00:01<00:00,  2.02it/s][A
-     67%|██████▋   | 2/3 [00:03<00:01,  1.61s/it][A
-      0%|          | 0/4 [00:00<?, ?it/s][A
-     25%|██▌       | 1/4 [00:01<00:04,  1.51s/it][A
-     50%|█████     | 2/4 [00:02<00:02,  1.29s/it][A
-     75%|███████▌  | 3/4 [00:02<00:01,  1.11s/it][A
-    100%|██████████| 4/4 [00:03<00:00,  1.16it/s][A
-    100%|██████████| 3/3 [00:07<00:00,  2.41s/it]
-
-
 
 ```python
 ms = 10
@@ -260,7 +236,6 @@ We can observe the following things regarding the execution time:
 
 Let us run again the comparison without the pure *Python* version this time, in order to sort larger arrays.
 
-
 ```python
 out = perfplot.bench(
     setup=lambda n: np.random.randint(low=0, high=10 * n, size=n, dtype=np.int64),
@@ -273,35 +248,6 @@ out = perfplot.bench(
     n_range=[10**k for k in range(1, 6)],
 )
 ```
-
-      0%|          | 0/5 [00:00<?, ?it/s]
-      0%|          | 0/3 [00:00<?, ?it/s][A
-     33%|███▎      | 1/3 [00:00<00:00,  6.80it/s][A
-     67%|██████▋   | 2/3 [00:00<00:00,  4.69it/s][A
-    100%|██████████| 3/3 [00:00<00:00,  5.47it/s][A
-     20%|██        | 1/5 [00:00<00:02,  1.58it/s][A
-      0%|          | 0/3 [00:00<?, ?it/s][A
-     33%|███▎      | 1/3 [00:00<00:00,  3.08it/s][A
-     67%|██████▋   | 2/3 [00:00<00:00,  3.06it/s][A
-    100%|██████████| 3/3 [00:00<00:00,  3.03it/s][A
-     40%|████      | 2/5 [00:01<00:02,  1.35it/s][A
-      0%|          | 0/3 [00:00<?, ?it/s][A
-     33%|███▎      | 1/3 [00:00<00:01,  1.04it/s][A
-     67%|██████▋   | 2/3 [00:02<00:00,  1.00it/s][A
-    100%|██████████| 3/3 [00:02<00:00,  1.22it/s][A
-     60%|██████    | 3/5 [00:04<00:02,  1.25s/it][A
-      0%|          | 0/3 [00:00<?, ?it/s][A
-     33%|███▎      | 1/3 [00:00<00:01,  1.26it/s][A
-     67%|██████▋   | 2/3 [00:02<00:00,  1.05it/s][A
-    100%|██████████| 3/3 [00:03<00:00,  1.06it/s][A
-     80%|████████  | 4/5 [00:07<00:01,  1.80s/it][A
-      0%|          | 0/3 [00:00<?, ?it/s][A
-     33%|███▎      | 1/3 [00:07<00:15,  7.93s/it][A
-     67%|██████▋   | 2/3 [00:14<00:07,  7.48s/it][A
-    100%|██████████| 3/3 [00:15<00:00,  5.06s/it][A
-    100%|██████████| 5/5 [00:25<00:00,  5.01s/it]
-
-
 
 ```python
 fig = plt.figure(figsize=(8, 8))
