@@ -91,7 +91,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      10 min read
+      8 min read
     
 </span></p>
 
@@ -113,8 +113,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#numba-implementation">Numba implementation</a></li>
 <li class="toc-entry toc-h2"><a href="#cython-implementation">Cython implementation</a></li>
 <li class="toc-entry toc-h2"><a href="#main-function">Main function</a></li>
-<li class="toc-entry toc-h2"><a href="#timings">Timings</a></li>
-<li class="toc-entry toc-h2"><a href="#timings-1">Timings</a>
+<li class="toc-entry toc-h2"><a href="#timings">Timings</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#with-pure-python">With pure Python</a></li>
 <li class="toc-entry toc-h3"><a href="#without-pure-python">Without pure Python</a></li>
@@ -147,6 +146,8 @@ window.onload = wrap_img;
 <p align="center">
   <img width="500" src="https://github.com/djfrancesco/randomized-select/blob/master/images/20200404/animation-optimized.gif" alt="Insertion sort">
 </p>
+
+<p><img src="/randomized-select/images/20200404/animation-optimized.gif" alt="" title="Insertion sort"></p>
 
 <p>However, this algorithm is not so efficient, except for elements that are almost already sorted: its performance is quadratic, i.e. $О ( n^2 )$. But we are only intersted here in comparing different optimization approaches in <em>Python</em> and not actually in sorting efficiently.</p>
 
@@ -307,9 +308,6 @@ window.onload = wrap_img;
 <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span><span class="n">A_sorted_cython</span><span class="p">,</span> <span class="n">A_sorted</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h2 id="timings-1">
-<a class="anchor" href="#timings-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Timings</h2>
-
 <p>Then we compare the execution time of the four different implementations: <em>Python</em>, <em>Cython</em>, <em>Numba</em> and NumPy. The NumPy command is <code class="highlighter-rouge">np.sort</code> with the default <em>quicksort</em> algorithm (implemented in <em>C</em>).</p>
 
 <h3 id="with-pure-python">
@@ -327,27 +325,6 @@ window.onload = wrap_img;
     <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s">'Python'</span><span class="p">,</span> <span class="s">'Cython'</span><span class="p">,</span> <span class="s">'Numba'</span><span class="p">,</span> <span class="s">'NumPy'</span><span class="p">],</span>
     <span class="n">n_range</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="o">**</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)],</span>
 <span class="p">)</span>
-</code></pre></div></div>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  0%|          | 0/3 [00:00&lt;?, ?it/s]
-  0%|          | 0/4 [00:00&lt;?, ?it/s][A
- 25%|██▌       | 1/4 [00:00&lt;00:02,  1.18it/s][A
- 50%|█████     | 2/4 [00:01&lt;00:01,  1.54it/s][A
- 75%|███████▌  | 3/4 [00:01&lt;00:00,  1.88it/s][A
-100%|██████████| 4/4 [00:01&lt;00:00,  2.29it/s][A
- 33%|███▎      | 1/3 [00:01&lt;00:03,  1.52s/it][A
-  0%|          | 0/4 [00:00&lt;?, ?it/s][A
- 25%|██▌       | 1/4 [00:00&lt;00:02,  1.04it/s][A
- 50%|█████     | 2/4 [00:01&lt;00:01,  1.27it/s][A
- 75%|███████▌  | 3/4 [00:01&lt;00:00,  1.54it/s][A
-100%|██████████| 4/4 [00:01&lt;00:00,  2.02it/s][A
- 67%|██████▋   | 2/3 [00:03&lt;00:01,  1.61s/it][A
-  0%|          | 0/4 [00:00&lt;?, ?it/s][A
- 25%|██▌       | 1/4 [00:01&lt;00:04,  1.51s/it][A
- 50%|█████     | 2/4 [00:02&lt;00:02,  1.29s/it][A
- 75%|███████▌  | 3/4 [00:02&lt;00:01,  1.11s/it][A
-100%|██████████| 4/4 [00:03&lt;00:00,  1.16it/s][A
-100%|██████████| 3/3 [00:07&lt;00:00,  2.41s/it]
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ms</span> <span class="o">=</span> <span class="mi">10</span>
@@ -396,34 +373,6 @@ window.onload = wrap_img;
     <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s">'Cython'</span><span class="p">,</span> <span class="s">'Numba'</span><span class="p">,</span> <span class="s">'NumPy'</span><span class="p">],</span>
     <span class="n">n_range</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="o">**</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
 <span class="p">)</span>
-</code></pre></div></div>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  0%|          | 0/5 [00:00&lt;?, ?it/s]
-  0%|          | 0/3 [00:00&lt;?, ?it/s][A
- 33%|███▎      | 1/3 [00:00&lt;00:00,  6.80it/s][A
- 67%|██████▋   | 2/3 [00:00&lt;00:00,  4.69it/s][A
-100%|██████████| 3/3 [00:00&lt;00:00,  5.47it/s][A
- 20%|██        | 1/5 [00:00&lt;00:02,  1.58it/s][A
-  0%|          | 0/3 [00:00&lt;?, ?it/s][A
- 33%|███▎      | 1/3 [00:00&lt;00:00,  3.08it/s][A
- 67%|██████▋   | 2/3 [00:00&lt;00:00,  3.06it/s][A
-100%|██████████| 3/3 [00:00&lt;00:00,  3.03it/s][A
- 40%|████      | 2/5 [00:01&lt;00:02,  1.35it/s][A
-  0%|          | 0/3 [00:00&lt;?, ?it/s][A
- 33%|███▎      | 1/3 [00:00&lt;00:01,  1.04it/s][A
- 67%|██████▋   | 2/3 [00:02&lt;00:00,  1.00it/s][A
-100%|██████████| 3/3 [00:02&lt;00:00,  1.22it/s][A
- 60%|██████    | 3/5 [00:04&lt;00:02,  1.25s/it][A
-  0%|          | 0/3 [00:00&lt;?, ?it/s][A
- 33%|███▎      | 1/3 [00:00&lt;00:01,  1.26it/s][A
- 67%|██████▋   | 2/3 [00:02&lt;00:00,  1.05it/s][A
-100%|██████████| 3/3 [00:03&lt;00:00,  1.06it/s][A
- 80%|████████  | 4/5 [00:07&lt;00:01,  1.80s/it][A
-  0%|          | 0/3 [00:00&lt;?, ?it/s][A
- 33%|███▎      | 1/3 [00:07&lt;00:15,  7.93s/it][A
- 67%|██████▋   | 2/3 [00:14&lt;00:07,  7.48s/it][A
-100%|██████████| 3/3 [00:15&lt;00:00,  5.06s/it][A
-100%|██████████| 5/5 [00:25&lt;00:00,  5.01s/it]
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
