@@ -22,10 +22,6 @@ Now, let's describe the chosen algorithm: *Insertion sort*, which is a very simp
 
 Here is a visualization of the *Insertion sort* process applied to 25 random elements (the code used to generate this animated gif is shown at the end of the notebook):
 
-<p align="center">
-  <img width="500" src="https://github.com/djfrancesco/randomized-select/blob/master/images/20200404/animation-optimized.gif" alt="Insertion sort">
-</p>
-
 ![]({{ site.baseurl }}/images/20200404/animation-optimized.gif "Insertion sort")
 
 However, this algorithm is not so efficient, except for elements that are almost already sorted: its performance is quadratic, i.e. $О ( n^2 )$. But we are only intersted here in comparing different optimization approaches in *Python* and not actually in sorting efficiently.
@@ -223,9 +219,7 @@ _ = ax.set_xlabel('n = len(A)')
 _ = ax.set_title('Timings of Insertion sort')
 ```
 
-<p align="center">
-  <img width="500" src="https://github.com/djfrancesco/randomized-select/blob/master/images/20200404/output_16_0.png" alt="Insertion sort">
-</p>
+![]({{ site.baseurl }}/images/20200404/output_16_0.png "Timings with Python")
 
 We can observe the following things regarding the execution time:
 - pure *Python* is slower by a factor 100 to 1000
@@ -267,9 +261,7 @@ _ = ax.set_xlabel('n = len(A)')
 _ = ax.set_title('Timings of Insertion sort')
 ```
 
-<p align="center">
-  <img width="500" src="https://github.com/djfrancesco/randomized-select/blob/master/images/20200404/output_19_0.png" alt="Insertion sort">
-</p>
+![]({{ site.baseurl }}/images/20200404/output_19_0.png "Timings without Python")
 
 
 ## Conclusion
