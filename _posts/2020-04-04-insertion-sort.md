@@ -1,9 +1,11 @@
 ---
 toc: true
 layout: post
-description: A basic example of Cython and Numba applied to a simple algorithm.
+description: A basic example of Cython and Numba applied to a simple algorithm
 categories: [markdown]
+author: François Pacull
 title: Cython & Numba implementations of a simple algorithm: Insertion sort
+tags: Python Cython Numba Sorting 
 ---
 
 # Cython & Numba implementations of a simple algorithm: *Insertion sort*
