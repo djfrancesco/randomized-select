@@ -15,7 +15,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-04-04T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-04-04T00:00:00-05:00","dateModified":"2020-04-04T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html"},"description":"A basic example of Cython and Numba applied to a simple algorithm.","@type":"BlogPosting","url":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html","headline":"Cython &amp; Numba implementations of a simple algorithm: Insertion sort","@context":"https://schema.org"}</script>
+{"description":"A basic example of Cython and Numba applied to a simple algorithm.","mainEntityOfPage":{"@type":"WebPage","@id":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html"},"@type":"BlogPosting","url":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html","headline":"Cython &amp; Numba implementations of a simple algorithm: Insertion sort","dateModified":"2020-04-04T00:00:00-05:00","datePublished":"2020-04-04T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/randomized-select/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://djfrancesco.github.io/randomized-select/feed.xml" title="randomized-select" /><link rel="shortcut icon" type="image/x-icon" href="/randomized-select/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Cython &amp; Numba implementations of a simple algorithm: Insertion sort | randomized-select</title>
@@ -30,11 +30,27 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-04-04T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2020-04-04T00:00:00-05:00","dateModified":"2020-04-04T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html"},"description":"A basic example of Cython and Numba applied to a simple algorithm.","@type":"BlogPosting","url":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html","headline":"Cython &amp; Numba implementations of a simple algorithm: Insertion sort","@context":"https://schema.org"}</script>
+{"description":"A basic example of Cython and Numba applied to a simple algorithm.","mainEntityOfPage":{"@type":"WebPage","@id":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html"},"@type":"BlogPosting","url":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html","headline":"Cython &amp; Numba implementations of a simple algorithm: Insertion sort","dateModified":"2020-04-04T00:00:00-05:00","datePublished":"2020-04-04T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
 <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://djfrancesco.github.io/randomized-select/feed.xml" title="randomized-select" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
 
 <script>
 function wrap_img(fn) {
@@ -133,7 +149,7 @@ window.onload = wrap_img;
 <p>Now, let’s describe the chosen algorithm: <em>Insertion sort</em>, which is a very simple and intuitive algorithm. As written in Cormen et al. [1]:</p>
 
 <blockquote>
-  <p><em>Insertion sort</em> works the way many people sort a hand of playing cards. We start with an empty left hand and the cards face down on the table. We then remove one card at a time from the table and insert it into the correct position in the left hand. To find the correct position for a card, we compare it with each of the cards already in the hand, from right to left […]. At all times, the cards held in the left hand are sorted, and these cards were originally the top cards of the pile on the table.</p>
+  <p>Insertion sort works the way many people sort a hand of playing cards. We start with an empty left hand and the cards face down on the table. We then remove one card at a time from the table and insert it into the correct position in the left hand. To find the correct position for a card, we compare it with each of the cards already in the hand, from right to left […]. At all times, the cards held in the left hand are sorted, and these cards were originally the top cards of the pile on the table.</p>
 </blockquote>
 
 <p>Here is a visualization of the <em>Insertion sort</em> process applied to 25 random elements (the code used to generate this animated gif is shown at the end of the notebook):</p>
@@ -213,11 +229,11 @@ window.onload = wrap_img;
 
 <p>Again, this is very similar to the Python implementation, especially the looping part. The differences are the following ones:</p>
 <ul>
-  <li>we added the <code class="highlighter-rouge">%%cython</code> magic for interactive work with Cython in Jupyterlab</li>
-  <li>we imported some libraries (<code class="highlighter-rouge">cython</code> and the NumPy C API) specifically for thic Cython notebook cell</li>
-  <li>we added some compiler directives (instructions which affect which kind of code Cython generates). <a href="https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#compiler-directives">Here</a> is a decription of the various compiler directives from the Cython documentation</li>
+  <li>we add the <code class="highlighter-rouge">%%cython</code> magic for interactive work with Cython in Jupyterlab</li>
+  <li>we import some libraries (<code class="highlighter-rouge">cython</code> and the NumPy C API) specifically for thic Cython notebook cell</li>
+  <li>we add some compiler directives (instructions which affect which kind of code Cython generates). <a href="https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#compiler-directives">Here</a> is a decription of the various compiler directives from the Cython documentation</li>
   <li>the function is defined as <code class="highlighter-rouge">cpdef</code> which means that it can be called either from some Python or Cython code. In our case, we are going to call it from a Python function</li>
-  <li>in the arguments, a typed 1D memoryview is performed on the given NumPy <code class="highlighter-rouge">int64</code> array: <code class="highlighter-rouge">cnp.int64_t[:] A</code>, which allows a fast/direct access to memory buffers. However, since this is typed,  we need to write another function if dealing with floats, e.g. with a <code class="highlighter-rouge">cnp.float64_t[:]</code> memoryview.</li>
+  <li>in the arguments, a typed 1D memoryview is performed on the given NumPy <code class="highlighter-rouge">int64</code> array: <code class="highlighter-rouge">cnp.int64_t[:] A</code>, which allows a fast/direct access to memory buffers. However, since this is typed, we need to write another function if dealing with floats, e.g. with a <code class="highlighter-rouge">cnp.float64_t[:]</code> memoryview.</li>
   <li>all variables are declared</li>
   <li><code class="highlighter-rouge">nogil</code> is added at the end of the function signature, to indicate the release of the <a href="https://wiki.python.org/moin/GlobalInterpreterLock">GIL</a>. In the present case, this is only to make sure that the CPython API is not used within the function (or there would be an error when executing the cell).</li>
 </ul>
@@ -354,7 +370,7 @@ window.onload = wrap_img;
 
 <h2 id="conclusion">Conclusion</h2>
 
-<p>We can see that both Cython and Numba give very good results regarding the optimization of NumPy-based Python code. Numba is easier to use but I think that Cython is more flexible regarding the kinds of algorithms that you can optimize. It is actually kind of coding a mix of C and Python. It is powerfull but sometimes a little bit complex.</p>
+<p>We can see that both Cython and Numba give very good results regarding the optimization of NumPy-based Python code. Numba is easier to use but I think that Cython is more flexible regarding the kinds of algorithms that you can optimize, but a little bit more complex.</p>
 
 <h2 id="appendix-generate-the-animated-gif">Appendix: generate the animated gif</h2>
 
@@ -422,7 +438,7 @@ window.onload = wrap_img;
         </p>
       </div>
       <div class="footer-col">
-        <p>Random selection of everything.</p>
+        <p>Random selection of things related to algorithms and computing.</p>
       </div>
     </div>
 
