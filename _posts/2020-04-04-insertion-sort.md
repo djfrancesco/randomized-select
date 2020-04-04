@@ -2,19 +2,20 @@
 toc: false
 layout: post
 description: A basic example of Cython and Numba applied to a simple algorithm.
-categories: [Python, Cython, Numba, Insertion sort, sorting, algorithms]
+categories: [Python, Cython, Numba, sorting algorithms]
 title: "Cython & Numba implementations of a simple algorithm: Insertion sort"
+author: François Pacull
 ---
 
 The aim of this notebook is to show a basic example of [Cython](https://cython.org/) and [Numba](http://numba.pydata.org/), applied to a simple algorithm. 
 
-As we will see, the code transformation from *Python* to *Cython* or *Python* to *Numba* can be really easy (specifically for the latter), while being way more efficient than pure *Python*. This is due to the fact that the computer is CPU bound when executing this type of algorithmic task, for which the overhead of calling the CPython API in pure *Python* is really large. And this is also true within a [Jupyterlab](/) notebook. 
+As we will see, the code transformation from Python to Cython or Python to Numba can be really easy (specifically for the latter), while being way more efficient than pure Python. This is due to the fact that the computer is CPU bound when executing this type of algorithmic task, for which the overhead of calling the CPython API in pure Python is really large. And this is also true within a [Jupyterlab](/) notebook. 
 
 Let us recall the purpose of these two Python-related tools from their respective websites:
 
-> *Cython* is an optimizing static compiler for both the *Python* programming language and the extended *Cython* programming language  
+> Cython is an optimizing static compiler for both the Python programming language and the extended Cython programming language  
 
-> *Numba* is an open source JIT compiler that translates a subset of *Python* and NumPy code into fast machine code.
+> Numba is an open source JIT compiler that translates a subset of Python and NumPy code into fast machine code.
 
 Now, let's describe the chosen algorithm: *Insertion sort*, which is a very simple and intuitive algorithm. As written in Cormen et al. [1]:
 
@@ -24,9 +25,9 @@ Here is a visualization of the *Insertion sort* process applied to 25 random ele
 
 ![]({{ site.baseurl }}/images/20200404/animation-optimized.gif "Insertion sort")
 
-However, this algorithm is not so efficient, except for elements that are almost already sorted: its performance is quadratic, i.e. $О ( n^2 )$. But we are only intersted here in comparing different optimization approaches in *Python* and not actually in sorting efficiently.
+However, this algorithm is not so efficient, except for elements that are almost already sorted: its performance is quadratic, i.e. $О ( n^2 )$. But we are only intersted here in comparing different optimization approaches in Python and not actually in sorting efficiently.
 
-Here is the *Python* code for an in-place array-based implementation:
+Here is the Python code for an in-place array-based implementation:
 
 ```python
 for j in range(1, len(A)):
@@ -66,24 +67,6 @@ from numba import jit
 np.random.seed(124)  # Seed the random number generator
 ```
 
-
-```python
-import matplotlib as mpl
-
-mpl.rcParams.update({'legend.fontsize': 22})
-mpl.rcParams.update({'xtick.labelsize': 20})
-mpl.rcParams.update({'ytick.labelsize': 20})
-mpl.rcParams.update({'axes.labelsize': 20})
-mpl.rcParams.update({'axes.titlesize': 24})
-mpl.rcParams.update({'font.family': 'sans-serif'})
-mpl.rcParams.update({'font.sans-serif': 'Ubuntu'})
-mpl.rcParams.update({'legend.frameon': True})
-mpl.rcParams.update({'legend.fancybox': False})
-mpl.rcParams.update({'legend.shadow': False})
-mpl.rcParams.update({'legend.facecolor': 'w'})
-mpl.rcParams.update({'legend.framealpha': 0.8})
-```
-
 ## Python implementation
 
 ```python
@@ -99,7 +82,7 @@ def insertion_sort_inplace_python(A):
 
 ## Numba implementation
  
-As you can observe, this is stricly the same as the pure *Python* implementation, except for the `@jit` (just-in-time) decorator:
+As you can observe, this is stricly the same as the pure Python implementation, except for the `@jit` (just-in-time) decorator:
 
 
 ```python
@@ -116,11 +99,11 @@ def insertion_sort_inplace_numba(A):
 
 ## Cython implementation
 
-Again, this is very similar to the *Python* implementation, especially the looping part. The differences are the following ones:
-- we added the `%%cython` magic for interactive work with *Cython* in Jupyterlab
-- we imported some libraries (`cython` and the NumPy C API) specifically for thic *Cython* notebook cell
-- we added some compiler directives (instructions which affect which kind of code *Cython* generates). [Here](https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#compiler-directives) is a decription of the various compiler directives from the *Cython* documentation
-- the function is defined as `cpdef` which means that it can be called either from some *Python* or *Cython* code. In our case, we are going to call it from a *Python* function
+Again, this is very similar to the Python implementation, especially the looping part. The differences are the following ones:
+- we added the `%%cython` magic for interactive work with Cython in Jupyterlab
+- we imported some libraries (`cython` and the NumPy C API) specifically for thic Cython notebook cell
+- we added some compiler directives (instructions which affect which kind of code Cython generates). [Here](https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#compiler-directives) is a decription of the various compiler directives from the Cython documentation
+- the function is defined as `cpdef` which means that it can be called either from some Python or Cython code. In our case, we are going to call it from a Python function
 - in the arguments, a typed 1D memoryview is performed on the given NumPy `int64` array: `cnp.int64_t[:] A`, which allows a fast/direct access to memory buffers. However, since this is typed,  we need to write another function if dealing with floats, e.g. with a `cnp.float64_t[:]` memoryview.
 - all variables are declared
 - `nogil` is added at the end of the function signature, to indicate the release of the [GIL](https://wiki.python.org/moin/GlobalInterpreterLock). In the present case, this is only to make sure that the CPython API is not used within the function (or there would be an error when executing the cell).
@@ -181,9 +164,9 @@ np.testing.assert_array_equal(A_sorted_cython, A_sorted_numba)
 np.testing.assert_array_equal(A_sorted_cython, A_sorted)
 ```
 
-Then we compare the execution time of the four different implementations: *Python*, *Cython*, *Numba* and NumPy. The NumPy command is `np.sort` with the default *quicksort* algorithm (implemented in *C*).
+Then we compare the execution time of the four different implementations: Python, Cython, Numba and NumPy. The NumPy command is `np.sort` with the default *quicksort* algorithm (implemented in C).
 
-### With pure *Python*
+### With pure Python
 
 ```python
 out = perfplot.bench(
@@ -222,13 +205,13 @@ _ = ax.set_title('Timings of Insertion sort')
 ![]({{ site.baseurl }}/images/20200404/output_16_0.png "Timings with Python")
 
 We can observe the following things regarding the execution time:
-- pure *Python* is slower by a factor 100 to 1000
-- the *Cython* and *Numba* implementations are very close, and probably equivalent to C 
+- pure Python is slower by a factor 100 to 1000
+- the Cython and Numba implementations are very close, and probably equivalent to C 
 - the *quicksort* NumPy algorithm is way more efficient ($O(n \; log \; n)$ on average)
 
-### Without pure *Python*
+### Without pure Python
 
-Let us run again the comparison without the pure *Python* version this time, in order to sort larger arrays.
+Let us run again the comparison without the pure Python version this time, in order to sort larger arrays.
 
 ```python
 out = perfplot.bench(
@@ -266,7 +249,7 @@ _ = ax.set_title('Timings of Insertion sort')
 
 ## Conclusion
 
-We can see that both *Cython* and *Numba* give very good results regarding the optimization of NumPy-based *Python* code. *Numba* is easier to use but I think that *Cython* is more flexible regarding the kinds of algorithms that you can optimize. It is actually kind of coding a mix of *C* and *Python*. It is powerfull but sometimes a little bit complex.
+We can see that both Cython and Numba give very good results regarding the optimization of NumPy-based Python code. Numba is easier to use but I think that Cython is more flexible regarding the kinds of algorithms that you can optimize. It is actually kind of coding a mix of C and Python. It is powerfull but sometimes a little bit complex.
 
 ## Appendix: generate the animated gif
 
