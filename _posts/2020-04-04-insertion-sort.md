@@ -1,3 +1,14 @@
+---
+title: "Cython & Numba implementations of a simple algorithm: Insertion sort"
+summary: "show a basic example of Cython and Numba, applied to a simple algorithm"
+toc: true
+comments: false
+image: images/2020-04-04/animation-optimized.gif
+hide: false
+search_exclude: true
+categories: [Python, Cython, Numba, Insertion sort, sorting]
+---
+
 # Cython & Numba implementations of a simple algorithm: *Insertion sort*
 
 The aim of this notebook is to show a basic example of [Cython](https://cython.org/) and [Numba](http://numba.pydata.org/), applied to a simple algorithm. 
