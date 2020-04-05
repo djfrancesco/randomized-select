@@ -127,8 +127,8 @@ The differences are the following ones:
 - we import some libraries (`cython` and the NumPy C API) specifically for thic Cython notebook cell
 - we add some compiler directives (instructions which affect which kind of code Cython generates). [Here](https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#compiler-directives) is a decription of the various compiler directives from the Cython documentation
 - the function is defined as `cpdef` which means that it can be called either from some Python or Cython code. In our case, we are going to call it from a Python function
-- in the arguments, a typed 1D memoryview is performed on the given NumPy `int64` array: `cnp.int64_t[:] A`, which allows a fast/direct access to memory buffers. However, since this is typed, we need to write another function if dealing with floats, e.g. with a `cnp.float64_t[:]` memoryview.
-- all variables are declared
+- in the arguments, a 1D typed memoryview is performed on the given NumPy `int64` array: `cnp.int64_t[:] A`, which allows a fast/direct access to memory buffers. However, since this is typed, we need to write another function if dealing with floats, e.g. with a `cnp.float64_t[:]` memoryview.
+- all variables within the function are declared
 - `nogil` is added at the end of the function signature, to indicate the release of the [GIL](https://wiki.python.org/moin/GlobalInterpreterLock). In the present case, this is only to make sure that the CPython API is not used within the function (or there would be an error when executing the cell).
 
 ## Main function
