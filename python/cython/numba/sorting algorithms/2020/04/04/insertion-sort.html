@@ -3,9 +3,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Cython &amp; Numba implementations of a simple algorithm: Insertion sort | randomized-select</title>
+<title>Insertion sort | randomized-select</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="Cython &amp; Numba implementations of a simple algorithm: Insertion sort" />
+<meta property="og:title" content="Insertion sort" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A basic example of Cython and Numba applied to a simple algorithm." />
 <meta property="og:description" content="A basic example of Cython and Numba applied to a simple algorithm." />
@@ -15,12 +15,12 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-04-04T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"A basic example of Cython and Numba applied to a simple algorithm.","mainEntityOfPage":{"@type":"WebPage","@id":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html"},"@type":"BlogPosting","url":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html","headline":"Cython &amp; Numba implementations of a simple algorithm: Insertion sort","dateModified":"2020-04-04T00:00:00-05:00","datePublished":"2020-04-04T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"A basic example of Cython and Numba applied to a simple algorithm.","mainEntityOfPage":{"@type":"WebPage","@id":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html"},"@type":"BlogPosting","url":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html","headline":"Insertion sort","dateModified":"2020-04-04T00:00:00-05:00","datePublished":"2020-04-04T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/randomized-select/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://djfrancesco.github.io/randomized-select/feed.xml" title="randomized-select" /><link rel="shortcut icon" type="image/x-icon" href="/randomized-select/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Cython &amp; Numba implementations of a simple algorithm: Insertion sort | randomized-select</title>
+<title>Insertion sort | randomized-select</title>
 <meta name="generator" content="Jekyll v4.0.0" />
-<meta property="og:title" content="Cython &amp; Numba implementations of a simple algorithm: Insertion sort" />
+<meta property="og:title" content="Insertion sort" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A basic example of Cython and Numba applied to a simple algorithm." />
 <meta property="og:description" content="A basic example of Cython and Numba applied to a simple algorithm." />
@@ -30,7 +30,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-04-04T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"A basic example of Cython and Numba applied to a simple algorithm.","mainEntityOfPage":{"@type":"WebPage","@id":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html"},"@type":"BlogPosting","url":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html","headline":"Cython &amp; Numba implementations of a simple algorithm: Insertion sort","dateModified":"2020-04-04T00:00:00-05:00","datePublished":"2020-04-04T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"A basic example of Cython and Numba applied to a simple algorithm.","mainEntityOfPage":{"@type":"WebPage","@id":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html"},"@type":"BlogPosting","url":"https://djfrancesco.github.io/randomized-select/python/cython/numba/sorting%20algorithms/2020/04/04/insertion-sort.html","headline":"Insertion sort","dateModified":"2020-04-04T00:00:00-05:00","datePublished":"2020-04-04T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 <link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
@@ -101,7 +101,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Cython &amp; Numba implementations of a simple algorithm: Insertion sort</h1><p class="page-description">A basic example of Cython and Numba applied to a simple algorithm.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-04T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Insertion sort</h1><p class="page-description">A basic example of Cython and Numba applied to a simple algorithm.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-04T00:00:00-05:00" itemprop="datePublished">
         Apr 4, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -134,7 +134,7 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <p>The aim of this notebook is to show a basic example of <a href="https://cython.org/">Cython</a> and <a href="http://numba.pydata.org/">Numba</a>, applied to a simple algorithm.</p>
 
-<p>As we will see, the code transformation from Python to Cython or Python to Numba can be really easy (specifically for the latter), and results in very efficient code for sorting algorithms. This is due to the fact that the computer is CPU bound when executing this type of algorithmic task, for which the overhead of calling the CPython API in pure Python is really large. And this is also true within a <a href="/">Jupyterlab</a> notebook.</p>
+<p>As we will see, the code transformation from Python to Cython or Python to Numba can be really easy (specifically for the latter), and results in very efficient code for sorting algorithms. This is due to the fact that the computer is CPU bound when executing this type of algorithmic task, for which the overhead of calling the CPython API in pure Python is really large.</p>
 
 <p>Let us recall the purpose of these two Python-related tools from their respective websites:</p>
 
@@ -227,16 +227,7 @@ window.onload = wrap_img;
 
 <h2 id="cython-implementation">Cython implementation</h2>
 
-<p>Again, this is very similar to the Python implementation, especially the looping part. The differences are the following ones:</p>
-<ul>
-  <li>we add the <code class="highlighter-rouge">%%cython</code> magic for interactive work with Cython in Jupyterlab</li>
-  <li>we import some libraries (<code class="highlighter-rouge">cython</code> and the NumPy C API) specifically for thic Cython notebook cell</li>
-  <li>we add some compiler directives (instructions which affect which kind of code Cython generates). <a href="https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#compiler-directives">Here</a> is a decription of the various compiler directives from the Cython documentation</li>
-  <li>the function is defined as <code class="highlighter-rouge">cpdef</code> which means that it can be called either from some Python or Cython code. In our case, we are going to call it from a Python function</li>
-  <li>in the arguments, a typed 1D memoryview is performed on the given NumPy <code class="highlighter-rouge">int64</code> array: <code class="highlighter-rouge">cnp.int64_t[:] A</code>, which allows a fast/direct access to memory buffers. However, since this is typed, we need to write another function if dealing with floats, e.g. with a <code class="highlighter-rouge">cnp.float64_t[:]</code> memoryview.</li>
-  <li>all variables are declared</li>
-  <li><code class="highlighter-rouge">nogil</code> is added at the end of the function signature, to indicate the release of the <a href="https://wiki.python.org/moin/GlobalInterpreterLock">GIL</a>. In the present case, this is only to make sure that the CPython API is not used within the function (or there would be an error when executing the cell).</li>
-</ul>
+<p>Again, this is very similar to the Python implementation, especially the looping part.</p>
 
 <div class="language-cython highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">cython</span>
 <span class="kn">import</span> <span class="nn">cython</span>
@@ -259,6 +250,17 @@ window.onload = wrap_img;
             <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">A</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
 </code></pre></div></div>
+
+<p>The differences are the following ones:</p>
+<ul>
+  <li>we add the <code class="highlighter-rouge">%%cython</code> magic for interactive work with Cython in Jupyterlab</li>
+  <li>we import some libraries (<code class="highlighter-rouge">cython</code> and the NumPy C API) specifically for thic Cython notebook cell</li>
+  <li>we add some compiler directives (instructions which affect which kind of code Cython generates). <a href="https://cython.readthedocs.io/en/latest/src/userguide/source_files_and_compilation.html#compiler-directives">Here</a> is a decription of the various compiler directives from the Cython documentation</li>
+  <li>the function is defined as <code class="highlighter-rouge">cpdef</code> which means that it can be called either from some Python or Cython code. In our case, we are going to call it from a Python function</li>
+  <li>in the arguments, a typed 1D memoryview is performed on the given NumPy <code class="highlighter-rouge">int64</code> array: <code class="highlighter-rouge">cnp.int64_t[:] A</code>, which allows a fast/direct access to memory buffers. However, since this is typed, we need to write another function if dealing with floats, e.g. with a <code class="highlighter-rouge">cnp.float64_t[:]</code> memoryview.</li>
+  <li>all variables are declared</li>
+  <li><code class="highlighter-rouge">nogil</code> is added at the end of the function signature, to indicate the release of the <a href="https://wiki.python.org/moin/GlobalInterpreterLock">GIL</a>. In the present case, this is only to make sure that the CPython API is not used within the function (or there would be an error when executing the cell).</li>
+</ul>
 
 <h2 id="main-function">Main function</h2>
 
@@ -438,7 +440,7 @@ window.onload = wrap_img;
         </p>
       </div>
       <div class="footer-col">
-        <p>Random selection of things related to algorithms and computing.</p>
+        <p>Random selection</p>
       </div>
     </div>
 
