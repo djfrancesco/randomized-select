@@ -1,7 +1,7 @@
 ---
 toc: false
 layout: post
-description: A basic example of Cython and Numba applied to a simple algorithm.
+description: An example of Cython and Numba applied to a simple algorithm.
 categories: [Python, Cython, Numba, Sorting algorithms]
 title: "Insertion sort"
 use_math: true
